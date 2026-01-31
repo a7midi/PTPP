@@ -1,0 +1,32 @@
+# Joint sweep: transport (contrast C, n_eff, etc) + geometry (a*, Δa*) on the *same* generated mesh instances.
+# Smoke profile: runs in minutes on a laptop.
+
+scdc:
+  L: 20
+  W: 16
+  pf_list: [0.11, 0.12]
+  knot_on_list: [false, true]
+  pknot: 0.90
+  knot_layers: [6, 12]
+  knot_channels: [4, 11]
+  seeds: [1, 2]
+  mode: steady
+
+geometry:
+  # Coarse-graining scales R to probe inside each depth slice.
+  r_scales: [2, 3, 4, 5, 6, 7]
+  domain_eta: 0.02
+  domain_min_blocks: 10
+  rho_min: 0.0
+  plateau_window_k: 2
+  plateau_rel_tol: 0.20
+  plateau_min_domain_blocks: 10
+  # Local bbox around the knot for local diagnostics
+  local_margin_layers: 1
+  local_margin_channels: 1
+
+outputs:
+  out_root: results/joint_sweep_smoke
+  write_parquet: true
+  write_csv: true
+  overwrite: true

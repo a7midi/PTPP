@@ -1,0 +1,9 @@
+# Python dependencies required to reproduce all datasets and figures.
+
+numpy>=1.24
+pandas>=2.0
+networkx>=3.2
+scipy>=1.10
+matplotlib>=3.7
+PyYAML>=6.0
+tqdm>=4.66

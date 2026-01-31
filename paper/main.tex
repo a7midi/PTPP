@@ -1,0 +1,168 @@
+\documentclass[reprint,aps,prl,superscriptaddress]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{A geometric defect marker predicts transport classes in directed photonic meshes}
+
+\author{Ahmed Alayar}
+\affiliation{Independent Researcher, Kuwait}
+
+\date{\today}
+
+\begin{abstract}
+Passive photonic meshes are attractive for low-latency analog processing, yet scalable coherent architectures often require phase stabilization and tight timing control.
+We study a complementary operating point: layered directed photonic meshes operated in an incoherent intensity-transport regime, where macroscopic output statistics are governed by topology rather than phase-coherent interference.
+We introduce a topology-only geometric defect marker $\Delta a^*$, defined as the mismatch between robust (Theil--Sen) and least-squares fixed points of a coarse-grained curvature--branching response measured on the condensation DAG of the mesh topology.
+Across ensemble sweeps and two system sizes, $\Delta a^*$ predicts a crossover in channel participation $n_{\mathrm{eff}}/W$, separating bulk-like transport ($\Delta a^*\approx 0$, low participation) from defect-mediated mixing ($\Delta a^*\lesssim -0.2$, higher participation).
+Crucially, this separation persists when the injection site is fixed in the bulk interior for both pristine and knotted topologies, isolating geometry from boundary-proximity artifacts.
+We further show that increasing defect strength (knot coupler density $p_{\mathrm{knot}}$) tunes $n_{\mathrm{eff}}/W$ continuously, and we verify that integrated and distributional outputs are insensitive to injection timing jitter up to 50\,ps, consistent with clock-tolerant incoherent operation.
+These results provide a reproducible geometry$\rightarrow$transport dictionary for defect-enabled photonic mixing networks.
+\end{abstract}
+
+\maketitle
+
+\paragraph{Introduction.}
+Photonic integrated circuits enable fast, low-energy linear transforms and analog computing, but scalable coherent meshes often pay substantial overhead in calibration, phase stabilization, and timing distribution~\cite{Reck1994,Clements2016,Miller2013,Vandoorne2014,Tait2017}.
+A complementary regime is to operate in incoherent intensity transport, where detectors integrate optical energy and the relevant observables are insensitive to relative phase.
+In this regime, the design question shifts from \emph{phase programming} to \emph{topology selection}: which directed mesh topologies realize narrow, waveguide-like transport versus distributed mixing in the bulk?
+
+Here we provide a compact, topology-only answer for a standard directed mesh model with a localized high-connectivity defect (a ``knot'').
+We show that a single geometric marker, $\Delta a^*$, computed from a coarse-grained response on the condensation DAG of the topology, predicts the transport class.
+We emphasize that the observed separation is not a claim of critical-exponent universality; rather, it is a size-robust classification of transport regimes by a coarse geometric coordinate.
+
+\paragraph{Directed intensity transport.}
+We consider a layered mesh with $W$ parallel channels and $L$ propagation stages.
+At each stage, candidate $2\times 2$ couplers between adjacent channels are present with bulk probability $p_f$.
+A localized knot defect is embedded by raising the coupler probability to $p_{\mathrm{knot}}$ inside a compact layer--channel region (here: channels 6--14 and layers 10--18 for $W{=}20,L{=}50$; channels 9--19 and layers 14--26 for $W{=}28,L{=}70$).
+Transport in the incoherent regime is modeled by nonnegative mixing of intensities,
+\begin{equation}
+  x^{(\ell+1)} = T_{\ell} x^{(\ell)},\qquad y = x^{(L)},
+  \label{eq:transport}
+\end{equation}
+where $x^{(\ell)}\in\mathbb{R}^W_{\ge 0}$ and $T_{\ell}$ encodes coupler placement and splitting at stage $\ell$.
+We quantify the output distribution $y$ using (i) contrast $C\equiv y_{\max}/\bar y$ and (ii) an effective number of populated outputs $n_{\mathrm{eff}}\equiv\exp(H)$, where $H=-\sum_i p_i\ln p_i$ is the Shannon entropy of $p_i=y_i/\sum_j y_j$~\cite{Shannon1948}.
+For cross-size comparisons we report the participation fraction $n_{\mathrm{eff}}/W$.
+
+\paragraph{Condensation-DAG geometry and defect marker.}
+Given the directed mesh graph, we compute strongly connected components and contract them to form the condensation DAG~\cite{Tarjan1972}.
+On the condensation DAG, for SCC nodes $X$ define a one-step future-cone volume $V(X)=1+|N^+(X)|$ and an edge-level cone-growth proxy
+\begin{equation}
+  \kappa(X\to Y)=V(Y)-V(X)
+  \label{eq:kappa}
+\end{equation}
+for edges $X\to Y$.
+As a local branching observable define $\rho(X)=\deg^+(X)-1$.
+At a coarse scale $R$ we block the condensation DAG into many depth-local blocks of size $\sim R$, compute block averages $(\kappa_R,\rho_R)$, and fit an affine response across blocks,
+\begin{equation}
+  \kappa_R \simeq a_R\rho_R+b_R.
+  \label{eq:affine}
+\end{equation}
+We estimate $(a_R,b_R)$ by least squares (LS) and by a robust Theil--Sen line fit~\cite{Theil1950,Sen1968}.
+A scaling window is identified algorithmically as a plateau of $a_R$ at the largest accessible $R$; the fixed point $a^*$ is taken as the median slope over this plateau.
+We then define the defect marker as the estimator mismatch
+\begin{equation}
+  \Delta a^* \equiv a^*_{\mathrm{rob}}-a^*_{\mathrm{LS}}.
+  \label{eq:delta}
+\end{equation}
+Intuitively, in bulk-like substrates the block scatter in Eq.~\eqref{eq:affine} is close to affine with modest noise, and LS and robust slopes coincide ($\Delta a^*\approx 0$).
+A localized defect introduces a small set of leverage/outlier blocks in the $(\kappa_R,\rho_R)$ relation, shifting the LS slope while leaving the robust slope comparatively stable; $\Delta a^*$ thus quantifies the geometric relevance of the defect at coarse scale.
+Importantly, $\Delta a^*$ is computed from topology alone and does not use transport data.
+
+\paragraph{Results: a geometry$\rightarrow$transport dictionary.}
+Figure~\ref{fig:dict} shows the main result: $\Delta a^*$ predicts transport class via a one-dimensional relationship with participation.
+For a base ensemble ($W{=}20,L{=}50$), an edge-guided reference (knot absent, injection at channel 0) clusters near $\Delta a^*\approx 0$ with low participation, while a defect-enabled operating point (knot present, interior injection at channel 9) shifts to more negative $\Delta a^*$ and higher $n_{\mathrm{eff}}/W$.
+Quantitatively, the medians shift from $(\Delta a^*, n_{\mathrm{eff}}/W)=(-0.087,0.184)$ (knot off) to $(-0.403,0.491)$ (knot on).
+To disentangle defect geometry from boundary proximity, we perform a fixed interior-injection control at a larger size ($W{=}28,L{=}70$) where both knot-off and knot-on instances are injected at the same mid-channel (channel 14).
+The separation persists with medians $(-0.139,0.271)$ (knot off) versus $(-0.619,0.477)$ (knot on), and the transition band lies around $\Delta a^*\approx -0.25$ (Fig.~\ref{fig:dict}).
+As a compact predictive summary, using $\Delta a^*$ as a single-feature classifier for the defect-enabled class yields ROC AUC $0.93$ (W=20 selection) and $1.00$ (fixed-injection replicate) on plateau-valid instances (Fig.~SS).
+Plateau selection itself does not produce a spurious separation: in the W=20 selection the plateau-valid fraction is $0.92$ (knot off) versus $0.27$ (knot on), and excluded knot-on instances have similarly high participation (Fig.~S6).
+
+\begin{figure}[t]
+  \includegraphics[width=0.48\columnwidth]{figs/fig_w20_dictionary_scatter.pdf}
+  \includegraphics[width=0.48\columnwidth]{figs/fig_size2_dictionary_scatter_global.pdf}
+  \caption{\textbf{Geometry$\rightarrow$transport dictionary.} Participation fraction $n_{\mathrm{eff}}/W$ versus defect marker $\Delta a^*$.
+  Left: $W{=}20,L{=}50$ selection comparing an edge-guided reference (knot off, injection at channel 0) to a defect-enabled operating point (knot on, interior injection at channel 9).
+  Right: fixed interior-injection control at a larger size ($W{=}28,L{=}70$) with injection fixed at channel 14 for both knot-off and knot-on instances.
+  Across sizes and boundary conditions, bulk-like transport clusters near $\Delta a^*\approx 0$, while defect-mediated mixing shifts to $\Delta a^*\lesssim -0.2$ with higher participation.}
+  \label{fig:dict}
+\end{figure}
+
+\paragraph{Continuous control and clock tolerance.}
+The defect marker suggests a design knob: increasing defect strength should move the system along the participation curve.
+Figure~\ref{fig:controls}(a) confirms this by sweeping the knot coupler density $p_{\mathrm{knot}}$ at fixed $(W,L,p_f)$, showing a monotone increase in median $n_{\mathrm{eff}}/W$.
+We also verify timing tolerance in a pulsed injection mode by introducing injection timing jitter up to 50\,ps and measuring integrated outputs.
+Figure~\ref{fig:controls}(b) shows that normalized integrated output energy is invariant across the jitter window for both a bulk reference and a defect-mediated operating point.
+In our implementation, distributional observables (participation and contrast) are likewise invariant across 0--50\,ps (Fig.~S7), consistent with incoherent detection and validating the use of integrated, clock-tolerant observables for transport classification.
+
+\begin{figure}[t]
+  \includegraphics[width=0.48\columnwidth]{figs/fig_pknot_vs_neff.pdf}
+  \includegraphics[width=0.48\columnwidth]{figs/fig_jitter_invariance.pdf}
+  \caption{\textbf{Control knobs and clock tolerance.}
+  (a) Continuous tuning of participation by defect strength: median $n_{\mathrm{eff}}/W$ increases monotonically with knot coupler density $p_{\mathrm{knot}}$ (sweep at fixed $W{=}20,L{=}50,p_f{=}0.12$, interior injection).
+  (b) Timing tolerance in pulsed mode: normalized integrated output energy versus injection timing jitter (0--50\,ps) is invariant for both a bulk reference and a defect-mediated operating point (within numerical precision).}
+  \label{fig:controls}
+\end{figure}
+
+\paragraph{Discussion.}
+We introduced a simple, reproducible geometric marker on the condensation DAG of a directed mesh topology and showed that it predicts whether the mesh realizes bulk-like or defect-mediated mixing in an incoherent intensity-transport regime.
+The key implication is a topology-only geometry$\rightarrow$transport surrogate: it does not fit microscopic phases and does not require simulating full wave interference.
+The present study is numerical and uses an idealized directed mixing model; incorporating additional photonic nonidealities (loss, fabrication disorder, backscattering) and experimental validation are important next steps.
+Notably, uniform multiplicative loss (a per-stage scalar attenuation) cancels in normalized observables and therefore does not change $n_{\mathrm{eff}}/W$; the relevant open question is robustness to \emph{nonuniform} attenuation and weak backward coupling.
+Nevertheless, because $\Delta a^*$ is defined on coarse-grained topological structure and exhibits strong classifier-quality under fixed interior injection, it is a natural candidate for design heuristics and for compiler constraints in defect-enabled photonic mixing networks.
+
+\paragraph{Data and code availability.}
+All scripts, configurations, and processed datasets required to reproduce the figures in this Letter and the Supplemental Material are available at \href{https://github.com/a7midi/PTPP}{github.com/a7midi/PTPP}.
+
+\begin{thebibliography}{99}
+
+\bibitem{Reck1994}
+M.~Reck, A.~Zeilinger, H.~J.~Bernstein, and P.~Bertani,
+``Experimental realization of any discrete unitary operator,''
+\emph{Phys. Rev. Lett.} \textbf{73}, 58 (1994).
+
+\bibitem{Clements2016}
+W.~R.~Clements, P.~C.~Humphreys, B.~J.~Metcalf, W.~S.~Kolthammer, and I.~A.~Walmsley,
+``Optimal design for universal multiport interferometers,''
+\emph{Optica} \textbf{3}, 1460 (2016).
+
+\bibitem{Miller2013}
+D.~A.~B.~Miller,
+``Self-configuring universal linear optical component,''
+\emph{Photonics Research} \textbf{1}, 1 (2013).
+
+\bibitem{Vandoorne2014}
+D.~Vandoorne \emph{et al.},
+``Experimental demonstration of reservoir computing on a silicon photonics chip,''
+\emph{Nat. Commun.} \textbf{5}, 3541 (2014).
+
+\bibitem{Tait2017}
+A.~N.~Tait \emph{et al.},
+``Neuromorphic photonic networks using silicon photonic weight banks,''
+\emph{Sci. Rep.} \textbf{7}, 7430 (2017).
+
+\bibitem{Shannon1948}
+C.~E.~Shannon,
+``A mathematical theory of communication,''
+\emph{Bell Syst. Tech. J.} \textbf{27}, 379 (1948).
+
+\bibitem{Tarjan1972}
+R.~E.~Tarjan,
+``Depth-first search and linear graph algorithms,''
+\emph{SIAM J. Comput.} \textbf{1}, 146 (1972).
+
+\bibitem{Theil1950}
+H.~Theil,
+``A rank-invariant method of linear and polynomial regression analysis,''
+\emph{Nederl. Akad. Wetensch. Proc. Ser. A} \textbf{53}, 386 (1950).
+
+\bibitem{Sen1968}
+P.~K.~Sen,
+``Estimates of the regression coefficient based on Kendall's tau,''
+\emph{J. Am. Stat. Assoc.} \textbf{63}, 1379 (1968).
+
+\end{thebibliography}
+
+\end{document}

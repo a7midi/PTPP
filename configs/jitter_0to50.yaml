@@ -1,0 +1,26 @@
+# Timing-jitter sweep used for Fig. 2(b) and Fig. S5.
+# Two reference instances are simulated in pulsed mode while sweeping injection-time jitter.
+
+jitter:
+  L: 50
+  W: 20
+  pf: 0.12
+  pknot: 0.90
+  knot_layers: [10, 18]
+  knot_channels: [6, 14]
+
+  cases:
+    - name: bulk_ref
+      knot_on: false
+      seed: 6
+      inject_channel: 0
+    - name: defect_point
+      knot_on: true
+      seed: 3
+      inject_channel: 9
+
+  jitter_ps_list: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+
+outputs:
+  out_root: results/jitter_0to50
+  overwrite: true

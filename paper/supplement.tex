@@ -1,0 +1,106 @@
+\documentclass[aps,prl,superscriptaddress]{revtex4-2}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Supplemental Material for ``A geometric defect marker predicts transport classes in directed photonic meshes''}
+
+\author{Ahmed Alayar}
+\affiliation{Independent Researcher, Kuwait}
+
+\date{\today}
+
+\maketitle
+
+% --- Supplemental numbering: Fig. S1, Eq. (S1), etc. ---
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+
+\section*{S1. Directed mesh ensemble and incoherent transport model}
+We study layered directed meshes with $W$ parallel channels and $L$ propagation stages. At each stage, candidate $2\times 2$ couplers between adjacent channels are present with bulk probability $p_f$; a localized ``knot'' defect is embedded by raising the coupler probability to $p_{\mathrm{knot}}$ inside a compact layer--channel region. Transport is modeled in an incoherent intensity regime by nonnegative mixing,
+\begin{equation}
+  x^{(\ell+1)} = T_{\ell} x^{(\ell)},\qquad y = x^{(L)} ,
+\end{equation}
+where $T_{\ell}$ encodes the random coupler placement and splitting for stage $\ell$. The output is summarized by contrast $C = y_{\max}/\bar y$ and by an effective number of populated outputs $n_{\mathrm{eff}} = \exp(H)$, where $H$ is the Shannon entropy of the normalized output intensities.
+
+\paragraph*{Ensembles used in the main text.}
+\emph{W=20 selection (Fig.~1 left).} $W{=}20$, $L{=}50$, $p_f\in\{0.105,\ldots,0.135\}$, $20$ seeds per $p_f$. We compare a knot-off edge reference (inject=0) against a knot-on interior operating point (inject=9). The knot occupies channels 6--14 and layers 10--18.
+
+\emph{Fixed-injection size replicate (Fig.~1 right).} $W{=}28$, $L{=}70$, $p_f\in\{0.11,0.12,0.13\}$, $10$ seeds per $p_f$. Injection is fixed to channel 14 for both knot-off and knot-on instances. The knot occupies channels 9--19 and layers 14--26.
+
+\section*{S2. Condensation-DAG geometry diagnostic (implementation details)}
+Given the directed mesh graph, we compute strongly connected components and contract them to form the condensation DAG. On this DAG, for SCC nodes $X$ define a one-step future-cone volume $V(X)=1+|N^+(X)|$ and an edge-level cone-growth proxy $\kappa(X\to Y)=V(Y)-V(X)$. As a branching observable we define $\rho(X)=\deg^+(X)-1$.
+
+\paragraph*{Blocking and affine response.}
+At scale $R$ we block the condensation DAG into many depth-local blocks of size $\sim R$ (deterministic partitioning by depth slice and contiguous SCC ordering). For each block $B$ we compute block averages $(\kappa_R(B),\rho_R(B))$. Across blocks we fit an affine response
+\begin{equation}
+  \kappa_R \simeq a_R\rho_R + b_R ,
+\end{equation}
+estimating $(a_R,b_R)$ by least squares and by the robust Theil--Sen method. We restrict to a healthy domain of blocks (minimum block count and positive branching) to avoid degenerate fits.
+
+\paragraph*{Plateau selection and fixed points.}
+We evaluate scales $R\in\{4,5,6,7,8,9,10\}$. To identify a scaling window we scan contiguous windows of $R$ values from large to small and select the first window in which the robust slope $a_R$ has small relative variation (plateau window length $k=3$, relative tolerance $0.15$). Fixed points $a^*_{\mathrm{rob}}$ and $a^*_{\mathrm{LS}}$ are defined as the median slope over the selected window for robust and LS estimators, respectively. The defect marker is $\Delta a^* = a^*_{\mathrm{rob}}-a^*_{\mathrm{LS}}$.
+
+\section*{S3. Binned dictionary visualization}
+Figure~\ref{fig:binned} shows a binned visualization of the geometry$\rightarrow$transport dictionary, highlighting the transition band near $\Delta a^*\approx -0.25$.
+
+\begin{figure}[t]
+\includegraphics[width=0.75\columnwidth]{figs/fig_dictionary_binned.pdf}
+\caption{\textbf{Binned geometry$\rightarrow$transport dictionary.} Median $n_{\mathrm{eff}}$ within bins of $\Delta a^*$ (paper convention) for the aggregated sweep.}
+\label{fig:binned}
+\end{figure}
+
+\section*{S4. Classifier-quality and threshold stability}
+To quantify predictive performance, we treat $\Delta a^*$ as a one-dimensional score for the defect-enabled class (knot on). Figure~\ref{fig:roc} reports ROC curves and AUC. Figure~\ref{fig:deltadist} shows the distribution of $\Delta a^*$ under the fixed-injection control. Figure~\ref{fig:auc_pf} reports AUC versus $p_f$. Figure~\ref{fig:thr} reports balanced accuracy versus the decision threshold on $\Delta a^*$.
+
+\begin{figure}[t]
+\includegraphics[width=0.75\columnwidth]{figs/figS1_roc.pdf}
+\caption{\textbf{ROC curves for $\Delta a^*$ as a scalar classifier.} AUC values are reported in the legend for the W=20 selection and the fixed-injection size replicate (plateau-valid subset).}
+\label{fig:roc}
+\end{figure}
+
+\begin{figure}[t]
+\includegraphics[width=0.75\columnwidth]{figs/figS2_delta_distributions.pdf}
+\caption{\textbf{$\Delta a^*$ distributions under fixed interior injection.} Overlapping histograms for knot-off and knot-on instances in the W=28 fixed-injection control.}
+\label{fig:deltadist}
+\end{figure}
+
+\begin{figure}[t]
+\includegraphics[width=0.75\columnwidth]{figs/figS3_auc_by_pf.pdf}
+\caption{\textbf{AUC versus bulk coupling density $p_f$.} Predictive performance remains high across the scanned $p_f$ values.}
+\label{fig:auc_pf}
+\end{figure}
+
+\begin{figure}[t]
+\includegraphics[width=0.75\columnwidth]{figs/figS6_threshold_sweep.pdf}
+\caption{\textbf{Threshold stability.} Balanced accuracy for knot-on classification as a function of a decision threshold on $\Delta a^*$. Vertical lines indicate representative operating thresholds discussed in the main text.}
+\label{fig:thr}
+\end{figure}
+
+\section*{S5. Plateau validity and selection bias check}
+Because $\Delta a^*$ is defined from a detected plateau window, it is undefined for ``plateau-fail'' instances. Figure~\ref{fig:plateau} reports plateau-valid fractions for each condition. In both ensembles, excluded knot-on instances exhibit similarly high participation, indicating that plateau filtering does not artificially create the high-participation defect cluster.
+
+\begin{figure}[t]
+\includegraphics[width=0.75\columnwidth]{figs/figS4_plateau_bias.pdf}
+\caption{\textbf{Plateau validity fractions.} Fraction of instances for which the algorithmic plateau criterion succeeds, shown for knot-off and knot-on conditions in each ensemble selection.}
+\label{fig:plateau}
+\end{figure}
+
+\section*{S6. Jitter invariance of distributional observables}
+Figure~\ref{fig:jitterdist} shows that participation and contrast are invariant across 0--50\,ps jitter in our pulsed implementation.
+
+\begin{figure}[t]
+\includegraphics[width=0.75\columnwidth]{figs/figS5_jitter_neff.pdf}\\
+\includegraphics[width=0.75\columnwidth]{figs/figS5_jitter_contrast.pdf}
+\caption{\textbf{Distributional jitter invariance.} Top: mean $n_{\mathrm{eff}}/W$ versus jitter. Bottom: mean contrast versus jitter.}
+\label{fig:jitterdist}
+\end{figure}
+
+\section*{Reproducibility}
+All scripts, configurations, and processed datasets required to reproduce the figures are available at \href{https://github.com/a7midi/PTPP}{github.com/a7midi/PTPP}. The figure-generation script used for the referee-facing plots is provided in the repository as \texttt{scripts/make\_referee\_response\_figs.py}.
+
+\end{document}

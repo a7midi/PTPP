@@ -1,0 +1,28 @@
+scdc:
+  L: 70
+  W: 28
+  pf_list: [0.11, 0.12, 0.13]
+  knot_on_list: [false, true]
+  pknot: 0.90
+  knot_layers: [14, 26]
+  knot_channels: [9, 19]
+  seeds: [1,2,3,4,5,6,7,8,9,10]
+  mode: steady
+  inject_list: [14]   # center channel in W=28
+
+geometry:
+  r_scales: [4,5,6,7,8,9,10,11,12]
+  domain_eta: 0.05
+  domain_min_blocks: 20
+  rho_min: 0.0
+  plateau_window_k: 3
+  plateau_rel_tol: 0.15
+  plateau_min_domain_blocks: 20
+  local_margin_layers: 3
+  local_margin_channels: 3
+
+outputs:
+  out_root: results/joint_sweep_size2
+  write_parquet: true
+  write_csv: true
+  overwrite: true
