@@ -1,6 +1,6 @@
-# PTPP PRL Reproducibility Package (Standalone)
+# PTPP Reproducibility Package (Standalone)
 
-This repository is a **standalone** reproducibility package for the PRL Letter and Supplemental Material contained in:
+This repository is a **standalone** reproducibility package for the Letter and Supplemental Material contained in:
 
 - `paper/main.tex` (compiled: `paper/main.pdf`)
 - `paper/supplement.tex` (compiled: `paper/supplement.pdf`)
